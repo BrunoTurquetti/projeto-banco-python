@@ -1,3 +1,5 @@
+from banco import buscar_conta_por_numero, realizar_transacao
+
 # Função: +depositar(valor: double)
 def depositar(numero_conta, valor):
     conta = buscar_conta_por_numero(numero_conta)
