@@ -87,3 +87,33 @@ def abrir_conta(id_cliente, tipo_conta="Corrente", saldo_inicial=0.0):
     contas.append(nova_conta)
     proximo_numero_conta += 1
     return nova_conta
+
+def depositar(numero_conta, valor):
+    """Implementa o método +depositar(valor: double)."""
+    if valor <= 0:
+        return "Erro: O valor do depósito deve ser positivo."
+
+    conta = buscar_conta_por_numero(numero_conta)
+    
+    if not conta:
+        return f"Erro: Conta número {numero_conta} não encontrada."
+    
+    # Executa o depósito
+    conta["saldo"] += valor
+    realizar_transacao(numero_conta, valor, "DEPÓSITO")
+    
+    return f"✅ Depósito de R$ {valor:.2f} realizado na conta {numero_conta}.\nNovo Saldo: R$ {conta['saldo']:.2f}"
+
+
+def consultar_saldo_detalhes(numero_conta):
+    """
+    Função auxiliar que retorna o dicionário da conta.
+    É usada por contaCorrente.py e poupanca_servicos.py.
+    """
+    conta = buscar_conta_por_numero(numero_conta)
+    
+    if not conta:
+        # Retorna uma string de erro para que os módulos downstream possam tratar
+        return f"Erro: Conta número {numero_conta} não encontrada."
+        
+    return conta
